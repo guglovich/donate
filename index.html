@@ -453,24 +453,46 @@
             <p style="color: var(--color-fg-muted); font-size: 14px; margin-bottom: 16px;">
                 Donate using Toncoin (TON). Your support helps fund AI agent subscriptions for continued development.
             </p>
-            
+
             <!-- Funding Goal -->
             <div style="background: var(--color-canvas-default); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 14px; font-weight: 500;">🤖 AI Agents Subscription Goal</span>
-                    <span style="font-size: 14px; color: var(--color-fg-muted);" id="goal-progress">0 / 100 TON</span>
+                    <span style="font-size: 14px; font-weight: 500;">🤖 Claude Pro Subscription</span>
+                    <span style="font-size: 12px; color: var(--color-fg-muted);" id="goal-progress">0 / 15 TON (~$20/mo)</span>
                 </div>
-                <div style="background: var(--color-canvas-subtle); border-radius: 3px; height: 8px; overflow: hidden;">
-                    <div id="goal-bar" style="background: var(--color-success-fg); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                <!-- Main progress bar -->
+                <div style="background: var(--color-canvas-subtle); border-radius: 3px; height: 10px; overflow: hidden; margin-bottom: 12px;">
+                    <div id="goal-bar" style="background: linear-gradient(90deg, #2ea043, #3fb950); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
                 </div>
-                <p style="font-size: 12px; color: var(--color-fg-muted); margin-top: 8px;">
-                    Funding AI agent subscriptions (Claude, Copilot, etc.) for enhanced development capabilities
+                <!-- Months segments -->
+                <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+                    <div class="month-segment" data-month="1" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
+                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div class="month-segment" data-month="2" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
+                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div class="month-segment" data-month="3" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
+                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div class="month-segment" data-month="4" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
+                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div class="month-segment" data-month="5" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
+                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div class="month-segment" data-month="6" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
+                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                    </div>
+                </div>
+                <p style="font-size: 11px; color: var(--color-fg-muted); margin-top: 8px; text-align: center;">
+                    Each segment = 1 month of Claude Pro (~15 TON / $20)
                 </p>
                 <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px; margin-top: 8px;">
                     Update Progress
                 </button>
             </div>
-            
+
             <!-- Edit Goal Panel -->
             <div id="edit-goal-panel" style="display: none; background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 12px; margin-bottom: 16px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -480,7 +502,7 @@
                     </div>
                     <div>
                         <label style="display: block; font-size: 11px; color: var(--color-fg-muted); margin-bottom: 4px;">Target (TON)</label>
-                        <input type="number" id="edit-target" value="100" style="width: 100%; padding: 4px 8px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-canvas-default); color: var(--color-fg-default); font-size: 13px;">
+                        <input type="number" id="edit-target" value="90" style="width: 100%; padding: 4px 8px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-canvas-default); color: var(--color-fg-default); font-size: 13px;">
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 8px;">
@@ -488,7 +510,7 @@
                     <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Cancel</button>
                 </div>
             </div>
-            
+
             <div class="input-group">
                 <input type="text" id="ton-address" readonly placeholder="Loading TON address...">
                 <button class="btn btn-primary" onclick="copyTonAddress()">Copy</button>
@@ -518,12 +540,14 @@
             projects: 5,
             aur: 15
         };
-        
+
         // Goal storage
         let goal = {
             current: 0,
-            target: 100
+            target: 90  // 6 months * 15 TON = 90 TON
         };
+
+        const TON_PER_MONTH = 15;  // ~$20/month for Claude Pro
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -531,7 +555,7 @@
             const savedStats = localStorage.getItem('donationStats');
             const savedGoal = localStorage.getItem('donationGoal');
             const savedTon = localStorage.getItem('tonAddress');
-            
+
             if (savedStats) {
                 stats = JSON.parse(savedStats);
             }
@@ -541,20 +565,20 @@
             if (savedTon) {
                 tonAddress = savedTon;
             }
-            
+
             // Update display
             document.getElementById('projects-count').textContent = stats.projects;
             document.getElementById('aur-count').textContent = stats.aur;
             document.getElementById('edit-projects').value = stats.projects;
             document.getElementById('edit-aur').value = stats.aur;
-            
+
             document.getElementById('edit-current').value = goal.current;
             document.getElementById('edit-target').value = goal.target;
             updateGoalDisplay();
-            
+
             // Set TON address
-            document.getElementById('ton-address').value = tonAddress === 'YOUR_TON_ADDRESS_HERE' 
-                ? 'Please set your TON address in the HTML file' 
+            document.getElementById('ton-address').value = tonAddress === 'YOUR_TON_ADDRESS_HERE'
+                ? 'Please set your TON address in the HTML file'
                 : tonAddress;
         });
 
@@ -567,13 +591,13 @@
         function saveStats() {
             const projects = parseInt(document.getElementById('edit-projects').value) || 0;
             const aur = parseInt(document.getElementById('edit-aur').value) || 0;
-            
+
             stats = { projects, aur };
             localStorage.setItem('donationStats', JSON.stringify(stats));
-            
+
             document.getElementById('projects-count').textContent = projects;
             document.getElementById('aur-count').textContent = aur;
-            
+
             toggleEditStats();
         }
 
@@ -585,11 +609,11 @@
 
         function saveGoal() {
             const current = parseFloat(document.getElementById('edit-current').value) || 0;
-            const target = parseFloat(document.getElementById('edit-target').value) || 100;
-            
+            const target = parseFloat(document.getElementById('edit-target').value) || 90;
+
             goal = { current, target };
             localStorage.setItem('donationGoal', JSON.stringify(goal));
-            
+
             updateGoalDisplay();
             toggleEditGoal();
         }
@@ -597,7 +621,25 @@
         function updateGoalDisplay() {
             const percentage = Math.min((goal.current / goal.target) * 100, 100);
             document.getElementById('goal-bar').style.width = percentage + '%';
-            document.getElementById('goal-progress').textContent = `${goal.current} / ${goal.target} TON`;
+            document.getElementById('goal-progress').textContent = `${goal.current} / 15 TON (~$20/mo)`;
+            
+            // Update month segments (each segment = 1 month = 15 TON)
+            const monthsFunded = Math.min(Math.floor(goal.current / TON_PER_MONTH), 6);
+            const currentMonthProgress = (goal.current % TON_PER_MONTH) / TON_PER_MONTH * 100;
+            
+            document.querySelectorAll('.month-segment').forEach((segment, index) => {
+                const fill = segment.querySelector('.segment-fill');
+                if (index < monthsFunded) {
+                    // Fully funded month
+                    fill.style.width = '100%';
+                } else if (index === monthsFunded && monthsFunded < 6) {
+                    // Current month being funded
+                    fill.style.width = currentMonthProgress + '%';
+                } else {
+                    // Not yet funded
+                    fill.style.width = '0%';
+                }
+            });
         }
 
         // TON functions
