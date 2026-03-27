@@ -421,11 +421,22 @@
                 <p class="card-description">
                     Toncoin donations for AI agent subscriptions. Fast, low-fee crypto payments.
                 </p>
-                <a href="#crypto-addresses" class="btn btn-primary" onclick="showCryptoAddresses()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <div style="margin-bottom: 12px;">
+                    <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 8px; font-family: monospace; font-size: 11px; word-break: break-all; color: var(--color-fg-muted); margin-bottom: 8px;" id="ton-address-display">
+                        UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu
+                    </div>
+                    <button id="copy-btn" class="btn btn-primary" onclick="copyTonAddress()" style="width: 100%; font-size: 13px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                        <span id="copy-text">Copy Address</span>
+                    </button>
+                </div>
+                <a href="#crypto-addresses" class="btn" onclick="showCryptoAddresses()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                     </svg>
-                    View TON Address
+                    View Funding Goal
                 </a>
             </div>
 
@@ -439,7 +450,7 @@
                     Have questions about donations or want to discuss custom development?
                 </p>
                 <a href="mailto:guglovich164@gmail.com" class="btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
                         <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                     </svg>
                     Send Email
@@ -447,11 +458,11 @@
             </div>
         </div>
 
-        <!-- Custom Amount -->
+        <!-- Funding Goal Section -->
         <div class="custom-amount" id="crypto-addresses">
-            <h3>💎 TON Wallet</h3>
+            <h3>🤖 Funding Goal</h3>
             <p style="color: var(--color-fg-muted); font-size: 14px; margin-bottom: 16px;">
-                Donate using Toncoin (TON). Your support helps fund AI agent subscriptions for continued development.
+                Your support helps fund AI agent subscriptions for continued development.
             </p>
 
             <!-- Funding Goal -->
@@ -509,25 +520,6 @@
                     <button class="btn btn-primary" onclick="saveGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Save</button>
                     <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Cancel</button>
                 </div>
-            </div>
-
-            <!-- TON Address with Copy -->
-            <div style="background: var(--color-canvas-default); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 13px; font-weight: 500;">Wallet Address</span>
-                    <button id="copy-btn" class="btn btn-primary" onclick="copyTonAddress()" style="width: auto; padding: 6px 12px; font-size: 13px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <span id="copy-text">Copy</span>
-                    </button>
-                </div>
-                <div id="ton-address-box" style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 12px; font-family: monospace; font-size: 12px; word-break: break-all; color: var(--color-fg-muted); transition: all 0.3s ease;">
-                    UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu
-                </div>
-                <p style="font-size: 11px; color: var(--color-fg-muted); margin-top: 8px;">
-                    ⚠️ Double-check the address before sending. Crypto transactions are irreversible.
-                </p>
             </div>
         </div>
 
@@ -665,25 +657,25 @@
                 // Change button appearance
                 const btn = document.getElementById('copy-btn');
                 const text = document.getElementById('copy-text');
-                const box = document.getElementById('ton-address-box');
+                const display = document.getElementById('ton-address-display');
                 
                 btn.style.background = 'var(--color-success-fg)';
                 btn.style.borderColor = 'var(--color-success-fg)';
                 text.textContent = 'Copied!';
                 
-                box.style.borderColor = 'var(--color-success-fg)';
-                box.style.background = 'rgba(63, 185, 80, 0.1)';
-                box.style.color = 'var(--color-success-fg)';
+                display.style.borderColor = 'var(--color-success-fg)';
+                display.style.background = 'rgba(63, 185, 80, 0.1)';
+                display.style.color = 'var(--color-success-fg)';
                 
                 // Reset after 2 seconds
                 clearTimeout(copyTimeout);
                 copyTimeout = setTimeout(() => {
                     btn.style.background = '';
                     btn.style.borderColor = '';
-                    text.textContent = 'Copy';
-                    box.style.borderColor = '';
-                    box.style.background = '';
-                    box.style.color = '';
+                    text.textContent = 'Copy Address';
+                    display.style.borderColor = '';
+                    display.style.background = '';
+                    display.style.color = '';
                 }, 2000);
             }).catch(err => {
                 alert('Address: ' + address);
