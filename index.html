@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support guglovich - Open Source Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-canvas-default: #ffffff;
+            --color-canvas-subtle: #f6f8fa;
+            --color-border-default: #d0d7de;
+            --color-fg-default: #24292f;
+            --color-fg-muted: #57606a;
+            --color-accent-fg: #0969da;
+            --color-success-fg: #1a7f37;
+            --color-attention-fg: #9a6700;
+            --color-btn-text: #24292f;
+            --color-btn-bg: #f6f8fa;
+            --color-btn-border: #d0d7de;
+            --color-btn-hover-bg: #f3f4f6;
+            --color-btn-primary-text: #ffffff;
+            --color-btn-primary-bg: #1a7f37;
+            --color-btn-primary-hover-bg: #146c2e;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-canvas-default: #0d1117;
+                --color-canvas-subtle: #161b22;
+                --color-border-default: #30363d;
+                --color-fg-default: #c9d1d9;
+                --color-fg-muted: #8b949e;
+                --color-accent-fg: #58a6ff;
+                --color-success-fg: #3fb950;
+                --color-attention-fg: #d29922;
+                --color-btn-text: #c9d1d9;
+                --color-btn-bg: #21262d;
+                --color-btn-border: #30363d;
+                --color-btn-hover-bg: #30363d;
+                --color-btn-primary-text: #ffffff;
+                --color-btn-primary-bg: #238636;
+                --color-btn-primary-hover-bg: #2ea043;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            background-color: var(--color-canvas-default);
+            color: var(--color-fg-default);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1012px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 48px 0 32px;
+        }
+
+        .avatar {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            border: 2px solid var(--color-border-default);
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header .username {
+            color: var(--color-fg-muted);
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .header .bio {
+            max-width: 500px;
+            margin: 0 auto;
+            color: var(--color-fg-muted);
+            font-size: 16px;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+            padding: 24px;
+            background-color: var(--color-canvas-subtle);
+            border-radius: 6px;
+            border: 1px solid var(--color-border-default);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-success-fg);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-fg-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main CTA */
+        .main-cta {
+            text-align: center;
+            padding: 32px 0;
+        }
+
+        .main-cta h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-cta p {
+            color: var(--color-fg-muted);
+            margin-bottom: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Donation Options */
+        .donation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .donation-card {
+            background-color: var(--color-canvas-subtle);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            padding: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .donation-card:hover {
+            border-color: var(--color-accent-fg);
+        }
+
+        .donation-card.primary {
+            border-color: var(--color-success-fg);
+            border-width: 2px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-canvas-default);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .card-description {
+            color: var(--color-fg-muted);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid var(--color-btn-border);
+            background-color: var(--color-btn-bg);
+            color: var(--color-btn-text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--color-btn-hover-bg);
+        }
+
+        .btn-primary {
+            background-color: var(--color-btn-primary-bg);
+            color: var(--color-btn-primary-text);
+            border-color: transparent;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-btn-primary-hover-bg);
+        }
+
+        .btn svg {
+            margin-right: 8px;
+        }
+
+        /* Custom Amount */
+        .custom-amount {
+            margin-top: 32px;
+            padding: 24px;
+            background-color: var(--color-canvas-subtle);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+        }
+
+        .custom-amount h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .amount-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .amount-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--color-btn-border);
+            background-color: var(--color-btn-bg);
+            color: var(--color-btn-text);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .amount-btn:hover,
+        .amount-btn.active {
+            border-color: var(--color-accent-fg);
+            color: var(--color-accent-fg);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            background-color: var(--color-canvas-default);
+            color: var(--color-fg-default);
+        }
+
+        .input-group input:focus {
+            outline: 2px solid var(--color-accent-fg);
+            outline-offset: -1px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 48px 0 24px;
+            color: var(--color-fg-muted);
+            font-size: 14px;
+            border-top: 1px solid var(--color-border-default);
+            margin-top: 48px;
+        }
+
+        .footer a {
+            color: var(--color-accent-fg);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .donation-options {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <!-- Замените на свою аватарку -->
+            <img src="https://github.com/guglovich.png" alt="guglovich Avatar" class="avatar">
+            <h1>guglovich</h1>
+            <p class="username">@guglovich</p>
+            <p class="bio">
+                Open source developer building tools for the Linux community.
+                Creator of AUR packages and GitHub projects.
+                Your support helps me continue creating free and open-source software.
+            </p>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="projects-count">5</div>
+                <div class="stat-label">
+                    <a href="https://github.com/guglovich?tab=repositories" target="_blank" style="color: inherit; text-decoration: none;">
+                        GitHub Projects
+                    </a>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="aur-count">15</div>
+                <div class="stat-label">
+                    <a href="https://aur.archlinux.org/packages?K=guglovich&SeB=m" target="_blank" style="color: inherit; text-decoration: none;">
+                        AUR Packages
+                    </a>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Open Source</div>
+            </div>
+        </div>
+
+        <!-- Edit Stats Button -->
+        <div style="text-align: center; margin-bottom: 16px;">
+            <button class="btn" onclick="toggleEditStats()" style="width: auto; padding: 4px 12px; font-size: 12px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+                Update Stats
+            </button>
+        </div>
+
+        <!-- Edit Stats Panel -->
+        <div id="edit-stats-panel" style="display: none; background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+            <h4 style="margin-bottom: 12px; font-size: 14px;">Update Statistics</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--color-fg-muted); margin-bottom: 4px;">GitHub Projects</label>
+                    <input type="number" id="edit-projects" value="5" style="width: 100%; padding: 6px 8px; border: 1px solid var(--color-border-default); border-radius: 6px; background: var(--color-canvas-default); color: var(--color-fg-default);">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--color-fg-muted); margin-bottom: 4px;">AUR Packages</label>
+                    <input type="number" id="edit-aur" value="15" style="width: 100%; padding: 6px 8px; border: 1px solid var(--color-border-default); border-radius: 6px; background: var(--color-canvas-default); color: var(--color-fg-default);">
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                <button class="btn btn-primary" onclick="saveStats()" style="width: auto; padding: 6px 12px;">Save</button>
+                <button class="btn" onclick="toggleEditStats()" style="width: auto; padding: 6px 12px;">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Main CTA -->
+        <section class="main-cta">
+            <h2>Support My Work</h2>
+            <p>
+                All my projects are free and open-source. Your donations help cover 
+                development costs, hosting, and allow me to dedicate more time to 
+                creating new tools and maintaining existing ones.
+            </p>
+        </section>
+
+        <!-- Donation Options -->
+        <div class="donation-options">
+            <!-- TON -->
+            <div class="donation-card primary">
+                <div class="card-header">
+                    <div class="card-icon">💎</div>
+                    <div class="card-title">TON</div>
+                </div>
+                <p class="card-description">
+                    Toncoin donations for AI agent subscriptions. Fast, low-fee crypto payments.
+                </p>
+                <a href="#crypto-addresses" class="btn btn-primary" onclick="showCryptoAddresses()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    View TON Address
+                </a>
+            </div>
+
+            <!-- Contact -->
+            <div class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon">📧</div>
+                    <div class="card-title">Contact Me</div>
+                </div>
+                <p class="card-description">
+                    Have questions about donations or want to discuss custom development?
+                </p>
+                <a href="mailto:your@email.com" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    Send Email
+                </a>
+            </div>
+        </div>
+
+        <!-- Custom Amount -->
+        <div class="custom-amount" id="crypto-addresses">
+            <h3>💎 TON Wallet</h3>
+            <p style="color: var(--color-fg-muted); font-size: 14px; margin-bottom: 16px;">
+                Donate using Toncoin (TON). Your support helps fund AI agent subscriptions for continued development.
+            </p>
+            
+            <!-- Funding Goal -->
+            <div style="background: var(--color-canvas-default); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 14px; font-weight: 500;">🤖 AI Agents Subscription Goal</span>
+                    <span style="font-size: 14px; color: var(--color-fg-muted);" id="goal-progress">0 / 100 TON</span>
+                </div>
+                <div style="background: var(--color-canvas-subtle); border-radius: 3px; height: 8px; overflow: hidden;">
+                    <div id="goal-bar" style="background: var(--color-success-fg); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+                <p style="font-size: 12px; color: var(--color-fg-muted); margin-top: 8px;">
+                    Funding AI agent subscriptions (Claude, Copilot, etc.) for enhanced development capabilities
+                </p>
+                <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px; margin-top: 8px;">
+                    Update Progress
+                </button>
+            </div>
+            
+            <!-- Edit Goal Panel -->
+            <div id="edit-goal-panel" style="display: none; background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 12px; margin-bottom: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div>
+                        <label style="display: block; font-size: 11px; color: var(--color-fg-muted); margin-bottom: 4px;">Current (TON)</label>
+                        <input type="number" id="edit-current" value="0" style="width: 100%; padding: 4px 8px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-canvas-default); color: var(--color-fg-default); font-size: 13px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; color: var(--color-fg-muted); margin-bottom: 4px;">Target (TON)</label>
+                        <input type="number" id="edit-target" value="100" style="width: 100%; padding: 4px 8px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-canvas-default); color: var(--color-fg-default); font-size: 13px;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                    <button class="btn btn-primary" onclick="saveGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Save</button>
+                    <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" id="ton-address" readonly placeholder="Loading TON address...">
+                <button class="btn btn-primary" onclick="copyTonAddress()">Copy</button>
+            </div>
+            <p style="font-size: 12px; color: var(--color-fg-muted); margin-top: 8px;">
+                ⚠️ Double-check the address before sending. Crypto transactions are irreversible.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                Thank you for your support! ❤️
+            </p>
+            <p style="margin-top: 8px;">
+                Questions? Reach out on <a href="https://github.com/guglovich">GitHub</a> or via <a href="guglovich164@gmail.com">email</a>.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // TON address - замените на ваш адрес
+        const tonAddress = 'UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu';
+        
+        // Stats storage
+        let stats = {
+            projects: 5,
+            aur: 15
+        };
+        
+        // Goal storage
+        let goal = {
+            current: 0,
+            target: 100
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved data
+            const savedStats = localStorage.getItem('donationStats');
+            const savedGoal = localStorage.getItem('donationGoal');
+            const savedTon = localStorage.getItem('tonAddress');
+            
+            if (savedStats) {
+                stats = JSON.parse(savedStats);
+            }
+            if (savedGoal) {
+                goal = JSON.parse(savedGoal);
+            }
+            if (savedTon) {
+                tonAddress = savedTon;
+            }
+            
+            // Update display
+            document.getElementById('projects-count').textContent = stats.projects;
+            document.getElementById('aur-count').textContent = stats.aur;
+            document.getElementById('edit-projects').value = stats.projects;
+            document.getElementById('edit-aur').value = stats.aur;
+            
+            document.getElementById('edit-current').value = goal.current;
+            document.getElementById('edit-target').value = goal.target;
+            updateGoalDisplay();
+            
+            // Set TON address
+            document.getElementById('ton-address').value = tonAddress === 'YOUR_TON_ADDRESS_HERE' 
+                ? 'Please set your TON address in the HTML file' 
+                : tonAddress;
+        });
+
+        // Stats functions
+        function toggleEditStats() {
+            const panel = document.getElementById('edit-stats-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveStats() {
+            const projects = parseInt(document.getElementById('edit-projects').value) || 0;
+            const aur = parseInt(document.getElementById('edit-aur').value) || 0;
+            
+            stats = { projects, aur };
+            localStorage.setItem('donationStats', JSON.stringify(stats));
+            
+            document.getElementById('projects-count').textContent = projects;
+            document.getElementById('aur-count').textContent = aur;
+            
+            toggleEditStats();
+        }
+
+        // Goal functions
+        function toggleEditGoal() {
+            const panel = document.getElementById('edit-goal-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveGoal() {
+            const current = parseFloat(document.getElementById('edit-current').value) || 0;
+            const target = parseFloat(document.getElementById('edit-target').value) || 100;
+            
+            goal = { current, target };
+            localStorage.setItem('donationGoal', JSON.stringify(goal));
+            
+            updateGoalDisplay();
+            toggleEditGoal();
+        }
+
+        function updateGoalDisplay() {
+            const percentage = Math.min((goal.current / goal.target) * 100, 100);
+            document.getElementById('goal-bar').style.width = percentage + '%';
+            document.getElementById('goal-progress').textContent = `${goal.current} / ${goal.target} TON`;
+        }
+
+        // TON functions
+        function copyTonAddress() {
+            const input = document.getElementById('ton-address');
+            if (input.value && input.value !== 'Please set your TON address in the HTML file') {
+                navigator.clipboard.writeText(input.value).then(() => {
+                    alert('TON address copied to clipboard!');
+                }).catch(err => {
+                    alert('Address: ' + input.value);
+                });
+            }
+        }
+
+        function showCryptoAddresses() {
+            document.getElementById('crypto-addresses').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
