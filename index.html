@@ -511,13 +511,24 @@
                 </div>
             </div>
 
-            <div class="input-group">
-                <input type="text" id="ton-address" readonly placeholder="Loading TON address...">
-                <button class="btn btn-primary" onclick="copyTonAddress()">Copy</button>
+            <!-- TON Address with Copy -->
+            <div style="background: var(--color-canvas-default); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 13px; font-weight: 500;">Wallet Address</span>
+                    <button id="copy-btn" class="btn btn-primary" onclick="copyTonAddress()" style="width: auto; padding: 6px 12px; font-size: 13px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                        <span id="copy-text">Copy</span>
+                    </button>
+                </div>
+                <div id="ton-address-box" style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 12px; font-family: monospace; font-size: 12px; word-break: break-all; color: var(--color-fg-muted); transition: all 0.3s ease;">
+                    UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu
+                </div>
+                <p style="font-size: 11px; color: var(--color-fg-muted); margin-top: 8px;">
+                    ⚠️ Double-check the address before sending. Crypto transactions are irreversible.
+                </p>
             </div>
-            <p style="font-size: 12px; color: var(--color-fg-muted); margin-top: 8px;">
-                ⚠️ Double-check the address before sending. Crypto transactions are irreversible.
-            </p>
         </div>
 
         <!-- Footer -->
@@ -643,15 +654,40 @@
         }
 
         // TON functions
+        let copyTimeout = null;
+        
         function copyTonAddress() {
-            const input = document.getElementById('ton-address');
-            if (input.value && input.value !== 'Please set your TON address in the HTML file') {
-                navigator.clipboard.writeText(input.value).then(() => {
-                    alert('TON address copied to clipboard!');
-                }).catch(err => {
-                    alert('Address: ' + input.value);
-                });
-            }
+            const address = tonAddress === 'YOUR_TON_ADDRESS_HERE' 
+                ? 'UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu'
+                : tonAddress;
+                
+            navigator.clipboard.writeText(address).then(() => {
+                // Change button appearance
+                const btn = document.getElementById('copy-btn');
+                const text = document.getElementById('copy-text');
+                const box = document.getElementById('ton-address-box');
+                
+                btn.style.background = 'var(--color-success-fg)';
+                btn.style.borderColor = 'var(--color-success-fg)';
+                text.textContent = 'Copied!';
+                
+                box.style.borderColor = 'var(--color-success-fg)';
+                box.style.background = 'rgba(63, 185, 80, 0.1)';
+                box.style.color = 'var(--color-success-fg)';
+                
+                // Reset after 2 seconds
+                clearTimeout(copyTimeout);
+                copyTimeout = setTimeout(() => {
+                    btn.style.background = '';
+                    btn.style.borderColor = '';
+                    text.textContent = 'Copy';
+                    box.style.borderColor = '';
+                    box.style.background = '';
+                    box.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                alert('Address: ' + address);
+            });
         }
 
         function showCryptoAddresses() {
