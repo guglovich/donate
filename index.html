@@ -345,14 +345,39 @@
         </div>
 
         <!-- Main CTA -->
-        <section class="main-cta">
-            <h2>Support My Work</h2>
-            <p>
+        <section class="main-cta" id="cta-section">
+            <div style="text-align: center; margin-bottom: 8px;">
+                <button class="btn" onclick="toggleEditCta()" style="width: auto; padding: 4px 12px; font-size: 12px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                    </svg>
+                    Edit Description
+                </button>
+            </div>
+            <h2 id="cta-title">Support My Work</h2>
+            <p id="cta-text">
                 All my projects are free and open-source. Your donations help cover
                 development costs, hosting, and allow me to dedicate more time to
                 creating new tools and maintaining existing ones.
             </p>
         </section>
+
+        <!-- Edit CTA Panel -->
+        <div id="edit-cta-panel" style="display: none; background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+            <h4 style="margin-bottom: 12px; font-size: 14px;">Edit Donation Description</h4>
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--color-fg-muted); margin-bottom: 4px;">Title</label>
+                <input type="text" id="edit-cta-title" value="Support My Work" style="width: 100%; padding: 6px 8px; border: 1px solid var(--color-border-default); border-radius: 6px; background: var(--color-canvas-default); color: var(--color-fg-default);">
+            </div>
+            <div>
+                <label style="display: block; font-size: 12px; color: var(--color-fg-muted); margin-bottom: 4px;">Description</label>
+                <textarea id="edit-cta-text" rows="4" style="width: 100%; padding: 6px 8px; border: 1px solid var(--color-border-default); border-radius: 6px; background: var(--color-canvas-default); color: var(--color-fg-default); font-family: inherit; font-size: 14px; resize: vertical;">All my projects are free and open-source. Your donations help cover development costs, hosting, and allow me to dedicate more time to creating new tools and maintaining existing ones.</textarea>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                <button class="btn btn-primary" onclick="saveCta()" style="width: auto; padding: 6px 12px;">Save</button>
+                <button class="btn" onclick="toggleEditCta()" style="width: auto; padding: 6px 12px;">Cancel</button>
+            </div>
+        </div>
 
         <!-- Donation Options -->
         <div class="donation-options">
@@ -424,13 +449,23 @@
             aur: 15
         };
 
+        // CTA storage
+        let cta = {
+            title: 'Support My Work',
+            text: 'All my projects are free and open-source. Your donations help cover development costs, hosting, and allow me to dedicate more time to creating new tools and maintaining existing ones.'
+        };
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved data
             const savedStats = localStorage.getItem('donationStats');
+            const savedCta = localStorage.getItem('donationCta');
 
             if (savedStats) {
                 stats = JSON.parse(savedStats);
+            }
+            if (savedCta) {
+                cta = JSON.parse(savedCta);
             }
 
             // Update display
@@ -438,6 +473,11 @@
             document.getElementById('aur-count').textContent = stats.aur;
             document.getElementById('edit-projects').value = stats.projects;
             document.getElementById('edit-aur').value = stats.aur;
+
+            document.getElementById('cta-title').textContent = cta.title;
+            document.getElementById('cta-text').textContent = cta.text;
+            document.getElementById('edit-cta-title').value = cta.title;
+            document.getElementById('edit-cta-text').value = cta.text;
         });
 
         // Stats functions
@@ -457,6 +497,25 @@
             document.getElementById('aur-count').textContent = aur;
 
             toggleEditStats();
+        }
+
+        // CTA functions
+        function toggleEditCta() {
+            const panel = document.getElementById('edit-cta-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveCta() {
+            const title = document.getElementById('edit-cta-title').value || 'Support My Work';
+            const text = document.getElementById('edit-cta-text').value || '';
+
+            cta = { title, text };
+            localStorage.setItem('donationCta', JSON.stringify(cta));
+
+            document.getElementById('cta-title').textContent = title;
+            document.getElementById('cta-text').textContent = text;
+
+            toggleEditCta();
         }
 
         // Copy address functions
