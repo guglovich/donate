@@ -237,66 +237,6 @@
             margin-right: 8px;
         }
 
-        /* Custom Amount */
-        .custom-amount {
-            margin-top: 32px;
-            padding: 24px;
-            background-color: var(--color-canvas-subtle);
-            border: 1px solid var(--color-border-default);
-            border-radius: 6px;
-        }
-
-        .custom-amount h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .amount-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .amount-btn {
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid var(--color-btn-border);
-            background-color: var(--color-btn-bg);
-            color: var(--color-btn-text);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .amount-btn:hover,
-        .amount-btn.active {
-            border-color: var(--color-accent-fg);
-            color: var(--color-accent-fg);
-        }
-
-        .input-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .input-group input {
-            flex: 1;
-            padding: 8px 12px;
-            font-size: 14px;
-            border: 1px solid var(--color-border-default);
-            border-radius: 6px;
-            background-color: var(--color-canvas-default);
-            color: var(--color-fg-default);
-        }
-
-        .input-group input:focus {
-            outline: 2px solid var(--color-accent-fg);
-            outline-offset: -1px;
-        }
-
         /* Footer */
         .footer {
             text-align: center;
@@ -316,6 +256,15 @@
             text-decoration: underline;
         }
 
+        /* QR Code */
+        .qr-code {
+            display: block;
+            margin: 12px auto;
+            max-width: 180px;
+            border-radius: 6px;
+            border: 1px solid var(--color-border-default);
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .stats {
@@ -325,10 +274,6 @@
             .donation-options {
                 grid-template-columns: 1fr;
             }
-
-            .input-group {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -336,7 +281,6 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <!-- Замените на свою аватарку -->
             <img src="https://github.com/guglovich.png" alt="guglovich Avatar" class="avatar">
             <h1>guglovich</h1>
             <p class="username">@guglovich</p>
@@ -404,8 +348,8 @@
         <section class="main-cta">
             <h2>Support My Work</h2>
             <p>
-                All my projects are free and open-source. Your donations help cover 
-                development costs, hosting, and allow me to dedicate more time to 
+                All my projects are free and open-source. Your donations help cover
+                development costs, hosting, and allow me to dedicate more time to
                 creating new tools and maintaining existing ones.
             </p>
         </section>
@@ -425,94 +369,35 @@
                     <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 8px; font-family: monospace; font-size: 11px; word-break: break-all; color: var(--color-fg-muted); margin-bottom: 8px;" id="ton-address-display">
                         UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu
                     </div>
-                    <button id="copy-btn" class="btn btn-primary" onclick="copyTonAddress()" style="width: 100%; font-size: 13px;">
+                    <button id="copy-ton-btn" class="btn btn-primary" onclick="copyTonAddress()" style="width: 100%; font-size: 13px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
                             <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                         </svg>
-                        <span id="copy-text">Copy Address</span>
+                        <span id="copy-ton-text">Copy Address</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Contact -->
+            <!-- Monero -->
             <div class="donation-card">
                 <div class="card-header">
-                    <div class="card-icon">📧</div>
-                    <div class="card-title">Contact Me</div>
+                    <div class="card-icon">🔒</div>
+                    <div class="card-title">Monero</div>
                 </div>
                 <p class="card-description">
-                    Have questions about donations or want to discuss custom development?
+                    Privacy-focused cryptocurrency. Secure and untraceable.
                 </p>
-                <a href="mailto:guglovich164@gmail.com" class="btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
-                    Send Email
-                </a>
-            </div>
-        </div>
-
-        <!-- Funding Goal Section -->
-        <div class="custom-amount" id="crypto-addresses">
-            <h3>🤖 Funding Goal</h3>
-            <p style="color: var(--color-fg-muted); font-size: 14px; margin-bottom: 16px;">
-                Your support helps fund AI agent subscriptions for continued development.
-            </p>
-
-            <!-- Funding Goal -->
-            <div style="background: var(--color-canvas-default); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 14px; font-weight: 500;">🤖 Claude Pro Subscription</span>
-                    <span style="font-size: 12px; color: var(--color-fg-muted);" id="goal-progress">0 / 15 TON (~$20/mo)</span>
-                </div>
-                <!-- Main progress bar -->
-                <div style="background: var(--color-canvas-subtle); border-radius: 3px; height: 10px; overflow: hidden; margin-bottom: 12px;">
-                    <div id="goal-bar" style="background: linear-gradient(90deg, #2ea043, #3fb950); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
-                </div>
-                <!-- Months segments -->
-                <div style="display: flex; gap: 4px; margin-bottom: 8px;">
-                    <div class="month-segment" data-month="1" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
-                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
+                <div style="margin-bottom: 12px;">
+                    <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=89zUVJhM3RQRb9H4HvJg3XXiNoMfBmwE4Rhx1HqFNrRkDwWAXAfDmBP61zXxtWkbrk5cpwSrADcDWS5LcpJ52nqjFAC5gnm" alt="Monero QR Code">
+                    <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 8px; font-family: monospace; font-size: 11px; word-break: break-all; color: var(--color-fg-muted); margin-bottom: 8px;" id="monero-address-display">
+                        89zUVJhM3RQRb9H4HvJg3XXiNoMfBmwE4Rhx1HqFNrRkDwWAXAfDmBP61zXxtWkbrk5cpwSrADcDWS5LcpJ52nqjFAC5gnm
                     </div>
-                    <div class="month-segment" data-month="2" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
-                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
-                    </div>
-                    <div class="month-segment" data-month="3" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
-                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
-                    </div>
-                    <div class="month-segment" data-month="4" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
-                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
-                    </div>
-                    <div class="month-segment" data-month="5" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
-                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
-                    </div>
-                    <div class="month-segment" data-month="6" style="flex: 1; height: 6px; background: var(--color-canvas-subtle); border-radius: 2px; overflow: hidden;">
-                        <div class="segment-fill" style="height: 100%; width: 0%; background: #3fb950; transition: width 0.3s ease;"></div>
-                    </div>
-                </div>
-                <p style="font-size: 11px; color: var(--color-fg-muted); margin-top: 8px; text-align: center;">
-                    Each segment = 1 month of Claude Pro (~15 TON / $20)
-                </p>
-                <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px; margin-top: 8px;">
-                    Update Progress
-                </button>
-            </div>
-
-            <!-- Edit Goal Panel -->
-            <div id="edit-goal-panel" style="display: none; background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 6px; padding: 12px; margin-bottom: 16px;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <div>
-                        <label style="display: block; font-size: 11px; color: var(--color-fg-muted); margin-bottom: 4px;">Current (TON)</label>
-                        <input type="number" id="edit-current" value="0" style="width: 100%; padding: 4px 8px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-canvas-default); color: var(--color-fg-default); font-size: 13px;">
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 11px; color: var(--color-fg-muted); margin-bottom: 4px;">Target (TON)</label>
-                        <input type="number" id="edit-target" value="90" style="width: 100%; padding: 4px 8px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-canvas-default); color: var(--color-fg-default); font-size: 13px;">
-                    </div>
-                </div>
-                <div style="display: flex; gap: 8px; margin-top: 8px;">
-                    <button class="btn btn-primary" onclick="saveGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Save</button>
-                    <button class="btn" onclick="toggleEditGoal()" style="width: auto; padding: 4px 8px; font-size: 11px;">Cancel</button>
+                    <button id="copy-monero-btn" class="btn btn-primary" onclick="copyMoneroAddress()" style="width: 100%; font-size: 13px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                        <span id="copy-monero-text">Copy Address</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -523,44 +408,29 @@
                 Thank you for your support! ❤️
             </p>
             <p style="margin-top: 8px;">
-                Questions? Reach out on <a href="https://github.com/guglovich">GitHub</a> or via <a href="guglovich164@gmail.com">email</a>.
+                Questions? Reach out on <a href="https://github.com/guglovich">GitHub</a>.
             </p>
         </footer>
     </div>
 
     <script>
-        // TON address - замените на ваш адрес
-        const tonAddress = 'UQDxxQn0VGjp6g6X7-cqyb8mzNwOgTzGBWqj2jN_PWd3EQEe';
-        
+        // Crypto addresses
+        const tonAddress = 'UQAlUvWM_8JGpR0DIgbz6xCtXN5eBclbH4qxP6NH0_z0Nwqu';
+        const moneroAddress = '89zUVJhM3RQRb9H4HvJg3XXiNoMfBmwE4Rhx1HqFNrRkDwWAXAfDmBP61zXxtWkbrk5cpwSrADcDWS5LcpJ52nqjFAC5gnm';
+
         // Stats storage
         let stats = {
             projects: 5,
             aur: 15
         };
 
-        // Goal storage
-        let goal = {
-            current: 0,
-            target: 90  // 6 months * 15 TON = 90 TON
-        };
-
-        const TON_PER_MONTH = 15;  // ~$20/month for Claude Pro
-
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved data
             const savedStats = localStorage.getItem('donationStats');
-            const savedGoal = localStorage.getItem('donationGoal');
-            const savedTon = localStorage.getItem('tonAddress');
 
             if (savedStats) {
                 stats = JSON.parse(savedStats);
-            }
-            if (savedGoal) {
-                goal = JSON.parse(savedGoal);
-            }
-            if (savedTon) {
-                tonAddress = savedTon;
             }
 
             // Update display
@@ -568,15 +438,6 @@
             document.getElementById('aur-count').textContent = stats.aur;
             document.getElementById('edit-projects').value = stats.projects;
             document.getElementById('edit-aur').value = stats.aur;
-
-            document.getElementById('edit-current').value = goal.current;
-            document.getElementById('edit-target').value = goal.target;
-            updateGoalDisplay();
-
-            // Set TON address
-            document.getElementById('ton-address').value = tonAddress === 'YOUR_TON_ADDRESS_HERE'
-                ? 'Please set your TON address in the HTML file'
-                : tonAddress;
         });
 
         // Stats functions
@@ -598,72 +459,22 @@
             toggleEditStats();
         }
 
-        // Goal functions
-        function toggleEditGoal() {
-            const panel = document.getElementById('edit-goal-panel');
-            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function saveGoal() {
-            const current = parseFloat(document.getElementById('edit-current').value) || 0;
-            const target = parseFloat(document.getElementById('edit-target').value) || 90;
-
-            goal = { current, target };
-            localStorage.setItem('donationGoal', JSON.stringify(goal));
-
-            updateGoalDisplay();
-            toggleEditGoal();
-        }
-
-        function updateGoalDisplay() {
-            const percentage = Math.min((goal.current / goal.target) * 100, 100);
-            document.getElementById('goal-bar').style.width = percentage + '%';
-            document.getElementById('goal-progress').textContent = `${goal.current} / 15 TON (~$20/mo)`;
-            
-            // Update month segments (each segment = 1 month = 15 TON)
-            const monthsFunded = Math.min(Math.floor(goal.current / TON_PER_MONTH), 6);
-            const currentMonthProgress = (goal.current % TON_PER_MONTH) / TON_PER_MONTH * 100;
-            
-            document.querySelectorAll('.month-segment').forEach((segment, index) => {
-                const fill = segment.querySelector('.segment-fill');
-                if (index < monthsFunded) {
-                    // Fully funded month
-                    fill.style.width = '100%';
-                } else if (index === monthsFunded && monthsFunded < 6) {
-                    // Current month being funded
-                    fill.style.width = currentMonthProgress + '%';
-                } else {
-                    // Not yet funded
-                    fill.style.width = '0%';
-                }
-            });
-        }
-
-        // TON functions
-        let copyTimeout = null;
-        
-        function copyTonAddress() {
-            const address = tonAddress === 'YOUR_TON_ADDRESS_HERE' 
-                ? 'UQDxxQn0VGjp6g6X7-cqyb8mzNwOgTzGBWqj2jN_PWd3EQEe'
-                : tonAddress;
-                
+        // Copy address functions
+        function copyAddress(address, displayId, btnId, textId) {
             navigator.clipboard.writeText(address).then(() => {
-                // Change button appearance
-                const btn = document.getElementById('copy-btn');
-                const text = document.getElementById('copy-text');
-                const display = document.getElementById('ton-address-display');
-                
+                const btn = document.getElementById(btnId);
+                const text = document.getElementById(textId);
+                const display = document.getElementById(displayId);
+
                 btn.style.background = 'var(--color-success-fg)';
                 btn.style.borderColor = 'var(--color-success-fg)';
                 text.textContent = 'Copied!';
-                
+
                 display.style.borderColor = 'var(--color-success-fg)';
                 display.style.background = 'rgba(63, 185, 80, 0.1)';
                 display.style.color = 'var(--color-success-fg)';
-                
-                // Reset after 2 seconds
-                clearTimeout(copyTimeout);
-                copyTimeout = setTimeout(() => {
+
+                setTimeout(() => {
                     btn.style.background = '';
                     btn.style.borderColor = '';
                     text.textContent = 'Copy Address';
@@ -676,8 +487,12 @@
             });
         }
 
-        function showCryptoAddresses() {
-            document.getElementById('crypto-addresses').scrollIntoView({ behavior: 'smooth' });
+        function copyTonAddress() {
+            copyAddress(tonAddress, 'ton-address-display', 'copy-ton-btn', 'copy-ton-text');
+        }
+
+        function copyMoneroAddress() {
+            copyAddress(moneroAddress, 'monero-address-display', 'copy-monero-btn', 'copy-monero-text');
         }
     </script>
 </body>
